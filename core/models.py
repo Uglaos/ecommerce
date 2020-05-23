@@ -18,9 +18,11 @@ LABEL_CHOICES = (
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, default='S', max_length=2)
     label = models.CharField(choices=LABEL_CHOICES, default='P', max_length=1)
     slug = models.SlugField()
+    description = models.TextField()
 
     def __str__(self):
         return self.title
@@ -29,6 +31,7 @@ class Item(models.Model):
         return reverse("core:product", kwargs={
             'slug': self.slug
         })
+
 
 class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
